@@ -1,6 +1,7 @@
 package se.hedsec;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Recipe implements Serializable {
@@ -8,6 +9,8 @@ public class Recipe implements Serializable {
     private String name;
     private List<String> ingredients;
     private List<String> instructions;
+    //private String author(tiktok username);
+    private Date date;
 
     public Recipe() {}
     public Recipe(String name, List<String>ingredients, List<String> instructions) {

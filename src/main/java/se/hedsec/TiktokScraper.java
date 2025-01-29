@@ -3,11 +3,13 @@ package se.hedsec;
 import com.microsoft.playwright.*;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TiktokScraper {
 
-    public List<String> getVideoLinks(String username){
+    public static List<String> getVideoLinks(String username){
         try (Playwright playwright = Playwright.create()) {
 
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
@@ -25,7 +27,7 @@ public class TiktokScraper {
             return videoLinks;
         }
     }
-    public String getRecipe(String videoLink){
+    public static void getRecipe(String videoLink, RecipePreFormatting recipe){
         try (Playwright playwright = Playwright.create()) {
             Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
             BrowserContext context = browser.newContext();
@@ -33,27 +35,41 @@ public class TiktokScraper {
 
             page.navigate(videoLink);
 
-            // Wait for the description element to load
-            Locator descriptionLocator = page.locator("[data-e2e='browse-video-desc']");
-            descriptionLocator.waitFor();
+            Locator videoDescription = page.locator("[data-e2e='browse-video-desc']");
+            videoDescription.waitFor();
+            String videoDescRecipe = videoDescription.innerText();
 
-            // Get the text content of the description
-            String videoDescription = descriptionLocator.innerText();
+            Locator videoDate = page.locator("span[data-e2e='browser-nickname'] span:last-of-type");
+            Date recipeDate;
+
+            if(videoDate.innerText().length() < "yyyy-mm-dd".length()){
+                StringBuilder sb = new StringBuilder(Integer.toString(LocalDate.now().getYear()));
+                sb.append('-').append(videoDate.innerText());
+                recipeDate = Date.valueOf(sb.toString());
+            }else
+                recipeDate = Date.valueOf(videoDate.innerText());
 
             browser.close();
-            return videoDescription;
+            recipe.setRecipe(videoDescRecipe);
+            recipe.setDate(recipeDate);
         }
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-
-        //TiktokScraper scraper = new TiktokScraper();
+        //TiktokScraper.getVideoLinks("jalalsamfit");
+        //TiktokScraper.getRecipe("https://www.tiktok.com/@jalalsamfit/video/7432767892094979360");
         //List<String> videoLinks = scraper.getVideoLinks("jalalsamfit");
         //String recipe = scraper.getRecipe(videoLinks.getFirst());
         //System.out.println(AiRecipeFormatting.getRecipe(recipe));
-        Recipe recipe = new Recipe("Pasta Carbonara", List.of("Pasta", "Egg", "Bacon"), List.of("Cook pasta", "Fry bacon", "Mix together"));
-        String image = ImageGenerator.generateImage(recipe);
-        System.out.println(image);
+        //Recipe recipe = new Recipe("Pasta Carbonara", List.of("Pasta", "Egg", "Bacon"), List.of("Cook pasta", "Fry bacon", "Mix together"));
+        //String image = ImageGenerator.generateImage(recipe);
+        //System.out.println(image);
+
+        RecipePreFormatting recipe = new RecipePreFormatting();
+        recipe.setUsername("jalalsamfit");
+        //List<String> videoLinks = TiktokScraper.getVideoLinks(recipe.getUsername());
+        TiktokScraper.getRecipe("https://www.tiktok.com/@jalalsamfit/video/7459103680462196000", recipe);
+        System.out.println(recipe);
     }
 }

@@ -5,12 +5,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class AiRecipeFormatting {
+public class RecipeFormatter {
     public static Recipe getRecipe(String recipe) throws IOException, InterruptedException {
         String apiKey = System.getenv("GEMINI_API_KEY");
         String requestBody = """
