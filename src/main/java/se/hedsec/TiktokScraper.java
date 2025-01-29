@@ -48,9 +48,12 @@ public class TiktokScraper {
     public static void main(String[] args) throws IOException, InterruptedException {
 
 
-        TiktokScraper scraper = new TiktokScraper();
-        List<String> videoLinks = scraper.getVideoLinks("jalalsamfit");
-        String recipe = scraper.getRecipe(videoLinks.getFirst());
-        System.out.println(AiRecipeFormatting.getRecipe(recipe));
+        //TiktokScraper scraper = new TiktokScraper();
+        //List<String> videoLinks = scraper.getVideoLinks("jalalsamfit");
+        //String recipe = scraper.getRecipe(videoLinks.getFirst());
+        //System.out.println(AiRecipeFormatting.getRecipe(recipe));
+        Recipe recipe = new Recipe("Pasta Carbonara", List.of("Pasta", "Egg", "Bacon"), List.of("Cook pasta", "Fry bacon", "Mix together"));
+        String image = ImageGenerator.generateImage(recipe);
+        System.out.println(image);
     }
 }

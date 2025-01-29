@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Recipe implements Serializable {
 
-    String name;
-    List<String> ingredients;
-    List<String> instructions;
+    private String name;
+    private List<String> ingredients;
+    private List<String> instructions;
 
     public Recipe() {}
     public Recipe(String name, List<String>ingredients, List<String> instructions) {

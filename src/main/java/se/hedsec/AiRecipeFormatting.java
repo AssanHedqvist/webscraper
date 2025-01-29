@@ -17,7 +17,7 @@ public class AiRecipeFormatting {
             {
                 "contents": [{
                     "parts": [
-                        {"text": "Kan du översätta till ett svenskt recept med EU metric: %s"}
+                        {"text": "Kan du översätta till ett svenskt recept med EU metric, name / titeln på receptet kan förbli på engelska: %s"}
                     ]
                 }],
                 "generationConfig": {
