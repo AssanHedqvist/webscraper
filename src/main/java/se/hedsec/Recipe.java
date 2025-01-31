@@ -9,7 +9,7 @@ public class Recipe implements Serializable {
     private String name;
     private List<String> ingredients;
     private List<String> instructions;
-    //private String author(tiktok username);
+    private String author;
     private Date date;
 
     public Recipe() {}
@@ -49,6 +49,24 @@ public class Recipe implements Serializable {
                 "name='" + name + '\'' +
                 ", ingredients=" + ingredients +
                 ", instructions=" + instructions +
+                ", author='" + author + '\'' +
+                ", date=" + date +
                 '}';
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

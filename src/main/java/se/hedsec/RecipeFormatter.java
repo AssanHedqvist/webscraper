@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class RecipeFormatter {
     public static Recipe getRecipe(String recipe) throws IOException, InterruptedException {
         String apiKey = System.getenv("GEMINI_API_KEY");
+
         String requestBody = """
             {
                 "contents": [{
