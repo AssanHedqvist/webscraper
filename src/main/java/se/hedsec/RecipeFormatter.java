@@ -26,14 +26,8 @@ public class RecipeFormatter {
                         "type": "OBJECT",
                         "properties": {
                             "name": {"type": "STRING"},
-                            "ingredients": {
-                                "type": "ARRAY",
-                                "items": {"type": "STRING"}
-                            },
-                            "instructions": {
-                                "type": "ARRAY",
-                                "items": {"type": "STRING"}
-                            }
+                            "ingredients": {"type": "STRING"},
+                            "instructions": {"type": "STRING"}
                         }
                     }
                 }

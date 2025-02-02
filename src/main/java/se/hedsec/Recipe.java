@@ -1,19 +1,21 @@
 package se.hedsec;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Recipe implements Serializable {
 
     private String name;
-    private List<String> ingredients;
-    private List<String> instructions;
+    private String ingredients;
+    private String instructions;
     private String author;
-    private Date date;
+    private java.sql.Date date;
+    private byte[] image;
+    private String videoUrl;
 
     public Recipe() {}
-    public Recipe(String name, List<String>ingredients, List<String> instructions) {
+    public Recipe(String name, String ingredients, String instructions) {
         this.name = name;
         this.ingredients = ingredients;
         this.instructions = instructions;
@@ -23,23 +25,39 @@ public class Recipe implements Serializable {
         return name;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public List<String> getIngredients() {
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<String> getInstructions() {
+    public String getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(List<String> instructions) {
+    public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
 
@@ -62,7 +80,7 @@ public class Recipe implements Serializable {
         return author;
     }
 
-    public void setDate(Date date) {
+    public void setDate(java.sql.Date date) {
         this.date = date;
     }
 
