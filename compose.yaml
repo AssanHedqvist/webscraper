@@ -1,3 +1,47 @@
+
+
 services:
-  web:
-    build: . 
+  scraper:
+    env_file:
+     - .env
+    build:
+      context: ./app
+    ports:
+    - '8000:5000'
+    networks:
+    - recipeApp-network
+    volumes:
+    - ./app:/app
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+
+  db:
+    env_file:
+     - .env
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+    - ./db/storage:/var/lib/mysql
+    - ./db/init:/docker-entrypoint-initdb.d
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+    - recipeApp-network
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u ${DB_USER} -p${DB_PASS}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+networks:
+  recipeApp-network:
+    external: true
+    name: recipeApp
